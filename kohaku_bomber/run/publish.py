@@ -104,6 +104,12 @@ def auto_sync(repository):
             with open(os.path.join(td, 'README.md'), 'w') as f:
                 print('---', file=f)
                 print('license: mit', file=f)
+                print('language:', file=f)
+                print('- en', file=f)
+                print('tags:', file=f)
+                print('- art', file=f)
+                print('- anime', file=f)
+                print('- not-for-all-audiences', file=f)
                 print('---', file=f)
                 print('', file=f)
 
