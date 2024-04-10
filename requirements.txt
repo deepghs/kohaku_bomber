@@ -14,3 +14,4 @@ tabulate
 torch<2.1
 llama-cpp-python
 transformers
+sentencepiece
