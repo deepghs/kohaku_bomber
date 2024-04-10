@@ -10,3 +10,4 @@ webuiapi
 di-toolkit
 sdeval>=0.0.4
 natsort
+tabulate
