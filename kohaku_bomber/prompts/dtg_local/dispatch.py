@@ -4,8 +4,7 @@ from time import time_ns
 from typing import List
 
 import torch.cuda
-from llama_cpp import LlamaTokenizer
-from transformers import LlamaForCausalLM
+from transformers import LlamaForCausalLM, LlamaTokenizer
 
 from kohaku_bomber.prompts.dtg_local.generate import tag_gen
 from kohaku_bomber.prompts.dtg_local.metainfo import SPECIAL, TARGET
