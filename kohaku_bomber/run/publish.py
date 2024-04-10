@@ -89,7 +89,7 @@ def auto_sync(repository):
             for item in records:
                 r_records.append({
                     'ID': item['danbooru_id'],
-                    'Tag': f'[{item["tag"]}]({os.path.relpath(inner_readme_file, td)})',
+                    'Tag': f'[{item["tag"]}]({item["hprefix"]}/{item["short_tag"]}/README.md)',
                     'Copyright': item['copyright'],
                     'Gender': item['gender'],
                     'Posts': item['danbooru_posts'],
