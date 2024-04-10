@@ -1,0 +1,12 @@
+gradio_client
+hbutils
+dghs-imgutils[gpu]>=0.4.1
+hfutils
+huggingface_hub
+pandas
+numpy
+tqdm
+webuiapi
+di-toolkit
+sdeval>=0.0.4
+natsort
