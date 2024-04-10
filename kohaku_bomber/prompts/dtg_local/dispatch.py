@@ -27,6 +27,7 @@ def get_result(
         blacklist: str = "",
         escape_bracket: bool = False,
         temperature: float = 1.35,
+        timeout: float = 30.0,
 ) -> str:
     if special_tags is None:
         special_tags = _DEFAULT_SPECIAL_TAGS
@@ -73,6 +74,8 @@ general: {", ".join(special_tags)}, {general.strip().strip(",")}<|input_end|>
             max_retry=5,
     ):
         logging.info(f'Yield LLM, cost time: {(time_ns() - start) / 1e9:.2f}s, length: {len(llm_gen)}')
+        if (time_ns() - start) / 1e9 > timeout:
+            raise RuntimeError('LLM Generation has been timeout.')
         # yield "", llm_gen, f"Total cost time: {(time_ns() - start) / 1e9:.2f}s"
 
     general = f"{general.strip().strip(',')}, {','.join(extra_tokens)}"
@@ -128,20 +131,26 @@ def get_prompt_locally(
         blacklist: str,
         escape_bracket: bool = False,
         temperature: float = 1.35,
+        timeout: float = 30.0,
 ):
     text_model, tokenizer = _get_model("KBlueLeaf/DanTagGen-beta")
-    return get_result(
-        text_model,
-        tokenizer,
-        rating,
-        artist,
-        characters,
-        copyrights,
-        target,
-        special_tags,
-        general,
-        width / height,
-        blacklist,
-        escape_bracket,
-        temperature,
-    )
+    while True:
+        try:
+            return get_result(
+                text_model,
+                tokenizer,
+                rating,
+                artist,
+                characters,
+                copyrights,
+                target,
+                special_tags,
+                general,
+                width / height,
+                blacklist,
+                escape_bracket,
+                temperature,
+                timeout,
+            )
+        except RuntimeError:
+            continue
