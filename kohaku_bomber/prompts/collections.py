@@ -88,7 +88,7 @@ def iter_prompt_pairs(character: str, copyright: str, gender: str = 'female', co
         lst = generic_prompts
         gen_type = []
 
-    lst = lst[:1]
+    # lst = lst[:1]
     for title, batch_size, length, rating, prompt_tags, neg_tags in tqdm(lst):
         logging.info(f'Generating prompts for {title!r} of character {character!r} ...')
         prompt = get_dtg_prompt(
