@@ -27,7 +27,7 @@ def get_result(
         blacklist: str = "",
         escape_bracket: bool = False,
         temperature: float = 1.35,
-        timeout: float = 30.0,
+        timeout: float = 15.0,
 ) -> str:
     if special_tags is None:
         special_tags = _DEFAULT_SPECIAL_TAGS
@@ -131,7 +131,7 @@ def get_prompt_locally(
         blacklist: str,
         escape_bracket: bool = False,
         temperature: float = 1.35,
-        timeout: float = 30.0,
+        timeout: float = 15.0,
 ):
     text_model, tokenizer = _get_model("KBlueLeaf/DanTagGen-beta")
     while True:
