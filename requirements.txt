@@ -11,3 +11,6 @@ di-toolkit
 sdeval>=0.0.4
 natsort
 tabulate
+torch<2.1
+llama-cpp-python
+transformers

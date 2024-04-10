@@ -4,6 +4,8 @@ from typing import Literal, List
 from gradio_client import Client
 from imgutils.tagging import remove_underline
 
+from .dtg_local import get_prompt_locally
+
 
 @lru_cache()
 def _dtg_online_client():
@@ -20,9 +22,9 @@ TypesTyping = List[Literal[
 ]]
 
 
-def get_dtg_prompt(character: str, copyright: str, gen_type: TypesTyping, core_tags: List[str],
-                   prompt_tags: List[str], width: int = 1344, height: int = 2016, escape: bool = True,
-                   rating: RatingTyping = 'safe', length: LengthTyping = 'long', temperature: float = 1.35):
+def get_dtg_prompt_online(character: str, copyright: str, gen_type: TypesTyping, core_tags: List[str],
+                          prompt_tags: List[str], width: int = 1344, height: int = 2016, escape: bool = True,
+                          rating: RatingTyping = 'safe', length: LengthTyping = 'long', temperature: float = 1.35):
     client = _dtg_online_client()
 
     result = client.predict(
@@ -46,6 +48,29 @@ def get_dtg_prompt(character: str, copyright: str, gen_type: TypesTyping, core_t
         "",  # str in 'tag Black list (seperated by comma)' Textbox component
         escape,  # bool in 'Escape bracket' Checkbox component
         temperature,  # float (numeric value between 0.1 and 2) in 'Temperature' Slider component
-        api_name="/wrapper"
+        api_name="/wrapper",
     )
     return result[0]
+
+
+def get_dtg_prompt(character: str, copyright: str, gen_type: TypesTyping, core_tags: List[str],
+                   prompt_tags: List[str], width: int = 1344, height: int = 2016, escape: bool = True,
+                   rating: RatingTyping = 'safe', length: LengthTyping = 'long', temperature: float = 1.35):
+    return get_prompt_locally(
+        rating=rating,
+        artist='',
+        characters=character,
+        copyrights=copyright,
+        target=length,
+        special_tags=gen_type,
+        general=f"""
+        {', '.join(map(remove_underline, core_tags))},
+        
+        {', '.join(map(remove_underline, prompt_tags))},
+        """,
+        width=width,
+        height=height,
+        blacklist='',
+        escape_bracket=escape,
+        temperature=temperature,
+    )
