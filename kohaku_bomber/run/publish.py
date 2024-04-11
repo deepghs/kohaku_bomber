@@ -66,7 +66,7 @@ def auto_sync(repository):
         records = []
 
     all_tags = list(list_character_tags())
-    all_tags = [tag for tag in all_tags if 'arknights' in tag]
+    # all_tags = [tag for tag in all_tags if 'arknights' in tag]
     for tag in tqdm(all_tags):
         if tag in exist_tags:
             logging.info(f'Tag {tag!r} already crawled, skipped.')
